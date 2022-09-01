@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "resources": [
+        {
+            "name": "VNetwork",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "VNetwork"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('VNetworkPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('VNetworkSubnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('VNetworkSubnet1Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('VNetworkSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('VNetworkSubnet2Prefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "variables": {
+        "VNetworkPrefix": "10.0.0.0/16",
+        "VNetworkSubnet1Name": "Subnet-1",
+        "VNetworkSubnet1Prefix": "10.0.0.0/24",
+        "VNetworkSubnet2Name": "Subnet-2",
+        "VNetworkSubnet2Prefix": "10.0.1.0/24"
+    }
+}
