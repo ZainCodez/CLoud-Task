@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [{
+        "name": "MyVault",
+        "type": "Microsoft.KeyVault/vaults",
+        "apiVersion": "2019-09-01",
+        "location": "[resourceGroup().location]",
+        "tags": {
+            "displayName": "MyVault"
+        },
+        "properties": {
+            "enabledForDeployment": true,
+            "enabledForTemplateDeployment": true,
+            "enabledForDiskEncryption": true,
+            "tenantId": "01454e03-3623-4535-b171-d8a0cf6d8eff",
+            "accessPolicies": [
+                {
+                    "tenantId": "01454e03-3623-4535-b171-d8a0cf6d8eff",
+                    "objectId": "01454e03-3623-4535-b171-d8a0cf6d8eff",
+                    "permissions": {
+                        "keys": [
+                            "Get"
+                        ],
+                        "secrets": [
+                            "List",
+                            "Get",
+                            "Set"
+                        ]
+                    }
+                }
+            ],
+            "sku": {
+                "name": "standard",
+                "family": "A"
+            }
+        },
+        "resources": [
+            {
+                "type": "secrets",
+                "name": "My Vault",
+                "apiVersion": "2016-10-01",
+                "dependsOn": [
+                    "[resourceId('Microsoft.KeyVault/vaults', 'MyVault')]"
+                ],
+                "properties": {
+                    "value": "itsmypassword_123"
+                }
+            }
+        ]
+    }],
+    "outputs": {}
+}
